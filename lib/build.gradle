@@ -1,0 +1,45 @@
+plugins {
+    id 'java-library'
+    id 'jacoco'
+}
+
+group = 'co.cobli.flink.metrics.dogstatsd'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.apache.flink:flink-metrics-core:1.13.6'
+    compileOnly 'org.apache.flink:flink-core:1.13.6'
+
+    compileOnly 'org.slf4j:slf4j-api:1.7.15'
+
+    testImplementation 'org.apache.flink:flink-metrics-core:1.13.6'
+    testImplementation 'org.apache.flink:flink-core:1.13.6'
+
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:5.21.0'
+}
+
+jar {
+    archiveBaseName = 'flink-metrics-dogstatsd'
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+test {
+    finalizedBy jacocoTestReport
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(11)
+    }
+}
